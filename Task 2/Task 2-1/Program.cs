@@ -20,6 +20,47 @@
     }
 
     /// <summary>
+    /// Коды ошибок.
+    /// </summary>
+    enum ErrorCode
+    {
+        /// <summary>
+        /// Значение по умолчанию.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        /// Неправильное преобразование к типу Enum.
+        /// </summary>
+        ConvertEnum = 1,
+
+        /// <summary>
+        /// Невозможно построить многоугольник.
+        /// </summary>
+        DomainQuantity = 2,
+
+        /// <summary>
+        /// Неправильное преобразование к целому числу.
+        /// </summary>
+        ConvertToInt = 3,
+
+        /// <summary>
+        /// Отрицательная сторона.
+        /// </summary>
+        DomainSide = 4,
+
+        /// <summary>
+        /// Неправильное преобразование к вещественному числу.
+        /// </summary>
+        ConvertToDouble = 5,
+
+        /// <summary>
+        /// Неправильный выбор действия.
+        /// </summary>
+        ActionType = 6
+    }
+
+    /// <summary>
     /// Точка входа.
     /// </summary>
     internal class Program
@@ -50,7 +91,7 @@
                 default:
                     {
                         Console.WriteLine("Неправильный выбор действия");
-                        Environment.Exit(6);
+                        Environment.Exit((int)ErrorCode.ActionType);
                         break;
                     }
             }
@@ -64,7 +105,17 @@
         /// <returns> Радиус.</returns>
         private static double GetRadius(double side, int quantity)
         {
-            return 42;
+            return side / (2 * Math.Tan(ConvertToRadian(180.0/quantity)));
+        }
+
+        /// <summary>
+        /// Преобразует градусы в радианы.
+        /// </summaryConvertToRadian
+        /// <param name="degree"> Угол в градусах. </param>
+        /// <returns> Угол в радианах.</returns>
+        private static double ConvertToRadian(double degree)
+        {
+            return degree * Math.PI / 180;
         }
 
         /// <summary>
@@ -89,7 +140,7 @@
             if (!Enum.TryParse(input, ignoreCase: true, out ActionType result))
             {
                 Console.WriteLine("Неправильный выбор");
-                Environment.Exit(1);
+                Environment.Exit((int)ErrorCode.ConvertEnum);
             }
 
             return result;
@@ -107,8 +158,9 @@
             if (quantity <= 2)
             {
                 Console.WriteLine("Количество сторон многоугольника должно быть больше двух!");
-                Environment.Exit(2);
+                Environment.Exit((int)ErrorCode.DomainQuantity);
             }
+
             return quantity;
         }
 
@@ -125,7 +177,7 @@
             if (!int.TryParse(input, out int result))
             {
                 Console.WriteLine("Введено не целое число");
-                Environment.Exit(3);
+                Environment.Exit((int)ErrorCode.ConvertToInt);
             }
 
             return result;
@@ -143,8 +195,9 @@
             if (side <= 0)
             {
                 Console.WriteLine("Длина стороны должна быть больше нуля");
-                Environment.Exit(4);
+                Environment.Exit((int)ErrorCode.DomainSide);
             }
+
             return side;
         }
 
@@ -161,7 +214,7 @@
             if (!double.TryParse(input, out double result))
             {
                 Console.WriteLine("Введено не целое число");
-                Environment.Exit(5);
+                Environment.Exit((int)ErrorCode.ConvertToDouble);
             }
 
             return result;
