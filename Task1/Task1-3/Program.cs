@@ -55,6 +55,13 @@
             return Math.Sin(angle * Math.PI / 180);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="side1"></param>
+        /// <param name="side2"></param>
+        /// <param name="angle"></param>
+        /// <returns></returns>
         static double GetSide(double side1, double side2, double angle)
         {
 
