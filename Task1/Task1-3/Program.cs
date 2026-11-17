@@ -28,7 +28,7 @@
         static double GetNumber(string message = "")
         {
             Console.Write(message);
-            string? input = Console.ReadLine();
+            string input = Console.ReadLine();
             return double.Parse(input);
         }
 
@@ -46,7 +46,7 @@
         }
 
         /// <summary>
-        /// 
+        /// преобразует в радианы.
         /// </summary>
         /// <param name="angle"></param>
         /// <returns></returns>
